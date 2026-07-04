@@ -3,6 +3,7 @@ import { AppShell } from "@/components/AppShell";
 import { ProfileForm } from "@/components/ProfileForm";
 import { Card, CardTitle, Badge, Avatar } from "@/components/ui";
 import type { Profile, University, ProjectMember, Project } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -46,7 +47,7 @@ export default async function ProfilePage() {
             <CardTitle className="mb-3">Reputasi</CardTitle>
             <div className="flex flex-wrap gap-2">
               <Badge tone="violet">{total} proyek diikuti</Badge>
-              <Badge tone="emerald">🏅 {done} proyek selesai</Badge>
+              <Badge tone="emerald"><Icon name="medal" size={13} className="inline align-[-2px]" /> {done} proyek selesai</Badge>
             </div>
           </Card>
         </div>

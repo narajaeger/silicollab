@@ -3,6 +3,7 @@ import { KanbanBoard } from "@/components/KanbanBoard";
 import { Card, CardTitle, Badge, EmptyState, Avatar } from "@/components/ui";
 import { TASK_STATUS_META } from "@/lib/constants";
 import type { Task, ProjectMember, Profile } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 export default async function TasksPage({
   params,
@@ -22,7 +23,7 @@ export default async function TasksPage({
     .eq("user_id", user?.id ?? "")
     .maybeSingle();
   if (!membership) {
-    return <EmptyState icon="🔒" title="Khusus anggota" description="Bergabung dulu untuk melihat papan tugas." />;
+    return <EmptyState icon={<Icon name="lock" size={28} />} title="Khusus anggota" description="Bergabung dulu untuk melihat papan tugas." />;
   }
 
   const { data: members } = await supabase

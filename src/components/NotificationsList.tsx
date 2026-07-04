@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Card, Button, Badge, EmptyState } from "@/components/ui";
 import type { Notification } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 export function NotificationsList({ initial }: { initial: Notification[] }) {
   const supabase = createClient();
@@ -27,7 +28,7 @@ export function NotificationsList({ initial }: { initial: Notification[] }) {
   }
 
   if (items.length === 0) {
-    return <EmptyState icon="🔔" title="Belum ada notifikasi" description="Notifikasi lamaran, tugas, dan mention akan muncul di sini." />;
+    return <EmptyState icon={<Icon name="bell" size={28} />} title="Belum ada notifikasi" description="Notifikasi lamaran, tugas, dan mention akan muncul di sini." />;
   }
 
   return (

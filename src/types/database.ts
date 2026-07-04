@@ -1,7 +1,5 @@
-// Tipe database — selaras dengan supabase/migrations.
+// Tipe database, selaras dengan supabase/migrations.
 // Regenerasi produksi: supabase gen types typescript --project-id <id> > src/types/database.ts
-// Bentuk `Database` memenuhi GenericSchema supabase-js (Tables/Views/Functions/Enums/CompositeTypes)
-// agar inferensi tipe .insert()/.update()/.select() bekerja (tidak jadi `never`).
 
 export type ProjectStatus = "open" | "in_progress" | "completed" | "archived";
 export type MemberRole = "owner" | "co_lead" | "member" | "viewer";
@@ -18,7 +16,10 @@ export type NotificationType =
   | "mention"
   | "deadline"
   | "invite"
+  | "connection"
   | "system";
+
+export type ConnectionStatus = "pending" | "accepted";
 
 export type ColumnType = "text" | "number" | "url" | "select";
 export interface ColumnDef {
@@ -257,6 +258,15 @@ export interface Manuscript {
   created_at: string;
 }
 
+export interface Connection {
+  id: string;
+  requester_id: string;
+  addressee_id: string;
+  status: ConnectionStatus;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface ActivityLog {
   id: string;
   project_id: string;
@@ -266,7 +276,6 @@ export interface ActivityLog {
   created_at: string;
 }
 
-// Mapped type membuat Row memenuhi Record<string, unknown> (syarat GenericSchema).
 type AsRecord<T> = { [K in keyof T]: T[K] };
 type TableDef<Row> = {
   Row: AsRecord<Row>;
@@ -296,6 +305,7 @@ export interface Database {
       attachments: TableDef<Attachment>;
       comments: TableDef<Comment>;
       notifications: TableDef<Notification>;
+      connections: TableDef<Connection>;
       manuscript: TableDef<Manuscript>;
       activity_log: TableDef<ActivityLog>;
     };

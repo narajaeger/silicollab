@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Button, Card, Input, Select, Badge, useToast } from "@/components/ui";
 import { exportTableToXlsx, exportTableToCsv, parseCsvToRows } from "@/lib/export-xlsx";
 import type { DataRow, DataTable } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 export function DataTableEditor({
   table,
@@ -102,7 +103,7 @@ export function DataTableEditor({
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <h3 className="font-semibold text-slate-900 dark:text-slate-100">{table.name}</h3>
-          {savedAt && <span className="text-xs text-emerald-600">✓ tersimpan {savedAt}</span>}
+          {savedAt && <span className="text-xs text-emerald-600"><Icon name="check" size={12} className="inline align-[-1px]" /> tersimpan {savedAt}</span>}
         </div>
         <div className="flex flex-wrap gap-2">
           <input ref={fileRef} type="file" accept=".csv" onChange={importCsv} className="hidden" />
@@ -140,7 +141,7 @@ export function DataTableEditor({
                           }}
                           onBlur={() => persistRow(rows.find((r) => r.id === row.id)!)}
                         >
-                          <option value="">—</option>
+                          <option value="">Kosong</option>
                           {(c.options ?? []).map((o) => (
                             <option key={o} value={o}>{o}</option>
                           ))}
@@ -185,7 +186,7 @@ export function DataTableEditor({
                       className="text-xs text-slate-400 hover:text-rose-600"
                       title="Hapus"
                     >
-                      ✕
+                      <Icon name="close" size={14} />
                     </button>
                   </td>
                 </tr>

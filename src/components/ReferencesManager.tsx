@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Button, Card, CardTitle, Input, Label, Modal, EmptyState, useToast } from "@/components/ui";
 import { toBibTeX, toVancouver, downloadText, fetchDoiMetadata } from "@/lib/references";
 import type { Reference } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 export function ReferencesManager({
   projectId,
@@ -101,7 +102,7 @@ export function ReferencesManager({
 
       {refs.length === 0 ? (
         <EmptyState
-          icon="📚"
+          icon={<Icon name="book" size={28} />}
           title="Belum ada referensi"
           description="Tambahkan referensi manual atau impor lewat DOI, lalu ekspor BibTeX / Vancouver."
           action={<Button onClick={() => setOpen(true)}>+ Tambah referensi</Button>}
@@ -129,8 +130,8 @@ export function ReferencesManager({
                     </a>
                   )}
                 </div>
-                <button onClick={() => remove(r.id)} className="text-xs text-slate-400 hover:text-rose-600">
-                  ✕
+                <button onClick={() => remove(r.id)} className="text-xs text-slate-400 hover:text-rose-600" aria-label="Hapus">
+                  <Icon name="close" size={14} />
                 </button>
               </Card>
             </li>

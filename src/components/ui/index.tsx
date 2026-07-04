@@ -1,4 +1,4 @@
-// Design system SiliCollab — primitif berbasis Tailwind (light + dark)
+// Design system SiliCollab, primitif berbasis Tailwind (light + dark)
 "use client";
 
 import Link from "next/link";
@@ -12,6 +12,7 @@ import {
   type TextareaHTMLAttributes,
   type ReactNode,
 } from "react";
+import { Icon } from "@/components/Icon";
 
 // ---------------------------------------------------------------------
 // util
@@ -33,16 +34,16 @@ type ButtonVariant =
 type ButtonSize = "sm" | "md" | "lg" | "icon";
 
 const buttonBase =
-  "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none";
+  "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none";
 
 const buttonVariants: Record<ButtonVariant, string> = {
-  primary: "bg-brand-600 text-white hover:bg-brand-700 shadow-sm",
+  primary: "bg-brand-600 text-white hover:bg-brand-700 shadow-glass",
   outline:
-    "border border-slate-300 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800",
+    "border border-brand-200 bg-white/70 text-brand-700 hover:bg-white dark:border-slate-700 dark:bg-transparent dark:text-slate-200 dark:hover:bg-slate-800",
   ghost:
-    "text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800",
+    "text-slate-600 hover:bg-brand-50 dark:text-slate-300 dark:hover:bg-slate-800",
   subtle:
-    "bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700",
+    "bg-brand-50 text-brand-700 hover:bg-brand-100 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700",
   success: "bg-emerald-600 text-white hover:bg-emerald-700 shadow-sm",
   danger: "bg-rose-600 text-white hover:bg-rose-700 shadow-sm",
 };
@@ -98,7 +99,7 @@ export function LinkButton({
 // Inputs
 // ---------------------------------------------------------------------
 const fieldBase =
-  "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500";
+  "w-full rounded-xl border border-brand-200/70 bg-white/70 px-3.5 py-2.5 text-sm text-slate-900 outline-none backdrop-blur transition placeholder:text-slate-400 focus:border-brand-400 focus:ring-2 focus:ring-brand-200 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100 dark:placeholder:text-slate-500";
 
 export function Input({ className = "", ...props }: InputHTMLAttributes<HTMLInputElement>) {
   return <input className={cn(fieldBase, className)} {...props} />;
@@ -138,7 +139,7 @@ export function Card({ children, className = "" }: { children: ReactNode; classN
   return (
     <div
       className={cn(
-        "rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900",
+        "glass rounded-2xl p-5 transition dark:border-slate-800",
         className
       )}
     >
@@ -283,7 +284,7 @@ export function Modal({
       <div className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" onClick={onClose} />
       <div
         className={cn(
-          "relative z-10 w-full max-w-lg animate-fade-in rounded-xl border border-slate-200 bg-white p-6 shadow-xl dark:border-slate-800 dark:bg-slate-900",
+          "glass relative z-10 w-full max-w-lg animate-fade-in rounded-2xl p-6 shadow-glass-lg dark:border-slate-800",
           className
         )}
       >
@@ -292,10 +293,10 @@ export function Modal({
             <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{title}</h3>
             <button
               onClick={onClose}
-              className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+              className="rounded-lg p-1 text-slate-400 hover:bg-brand-50 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
               aria-label="Tutup"
             >
-              ✕
+              <Icon name="close" size={18} />
             </button>
           </div>
         )}
@@ -323,11 +324,11 @@ export function Drawer({
   return (
     <div className="fixed inset-0 z-50">
       <div className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" onClick={onClose} />
-      <div className="absolute right-0 top-0 flex h-full w-full max-w-md animate-slide-in flex-col border-l border-slate-200 bg-white shadow-xl dark:border-slate-800 dark:bg-slate-900">
-        <div className="flex items-center justify-between border-b border-slate-200 p-4 dark:border-slate-800">
+      <div className="glass absolute right-0 top-0 flex h-full w-full max-w-md animate-slide-in flex-col rounded-l-2xl shadow-glass-lg dark:border-slate-800">
+        <div className="flex items-center justify-between border-b border-white/50 p-4 dark:border-slate-800">
           <h3 className="font-semibold text-slate-900 dark:text-slate-100">{title}</h3>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-700" aria-label="Tutup">
-            ✕
+          <button onClick={onClose} className="rounded-lg p-1 text-slate-400 hover:bg-brand-50 hover:text-slate-700 dark:hover:bg-slate-800" aria-label="Tutup">
+            <Icon name="close" size={18} />
           </button>
         </div>
         <div className="flex-1 overflow-y-auto p-4">{children}</div>
@@ -354,7 +355,7 @@ export function Skeleton({ className = "" }: { className?: string }) {
 // Empty state
 // ---------------------------------------------------------------------
 export function EmptyState({
-  icon = "📭",
+  icon,
   title,
   description,
   action,
@@ -365,8 +366,10 @@ export function EmptyState({
   action?: ReactNode;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-300 bg-white/50 px-6 py-12 text-center dark:border-slate-700 dark:bg-slate-900/40">
-      <div className="mb-3 text-4xl">{icon}</div>
+    <div className="glass-soft flex flex-col items-center justify-center rounded-2xl border-dashed px-6 py-12 text-center dark:border-slate-700">
+      <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-100/70 text-brand-600 dark:bg-slate-800 dark:text-brand-300">
+        {icon ?? <Icon name="inbox" size={28} />}
+      </div>
       <h3 className="font-semibold text-slate-900 dark:text-slate-100">{title}</h3>
       {description && (
         <p className="mt-1 max-w-sm text-sm text-slate-500 dark:text-slate-400">{description}</p>
@@ -387,14 +390,13 @@ const ToastContext = createContext<ToastCtx | null>(null);
 
 export function useToast(): ToastCtx {
   const ctx = useContext(ToastContext);
-  // Fallback aman bila provider belum terpasang
   return ctx ?? { push: () => {} };
 }
 
 const toastTones: Record<ToastTone, string> = {
-  success: "border-emerald-200 bg-emerald-50 text-emerald-800",
-  error: "border-rose-200 bg-rose-50 text-rose-800",
-  info: "border-slate-200 bg-white text-slate-800",
+  success: "border-emerald-200 bg-emerald-50/90 text-emerald-800 backdrop-blur",
+  error: "border-rose-200 bg-rose-50/90 text-rose-800 backdrop-blur",
+  info: "border-brand-200 bg-white/90 text-slate-800 backdrop-blur",
 };
 
 export function ToastProvider({ children }: { children: ReactNode }) {

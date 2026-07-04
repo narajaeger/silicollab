@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { ReferencesManager } from "@/components/ReferencesManager";
 import { EmptyState } from "@/components/ui";
 import type { Reference } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 export default async function ReferencesPage({
   params,
@@ -21,7 +22,7 @@ export default async function ReferencesPage({
     .eq("user_id", user?.id ?? "")
     .maybeSingle();
   if (!membership) {
-    return <EmptyState icon="🔒" title="Khusus anggota" description="Bergabung dulu untuk mengelola referensi." />;
+    return <EmptyState icon={<Icon name="lock" size={28} />} title="Khusus anggota" description="Bergabung dulu untuk mengelola referensi." />;
   }
 
   const { data: refs } = await supabase

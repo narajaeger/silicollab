@@ -57,7 +57,7 @@ export function ProfileForm({
         <div>
           <Label>Universitas</Label>
           <Select value={universityId} onChange={(e) => setUniversityId(e.target.value)}>
-            <option value="">— Pilih —</option>
+            <option value="">Pilih universitas</option>
             {universities.map((u) => (
               <option key={u.id} value={u.id}>{u.name}</option>
             ))}

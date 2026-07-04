@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Button, Avatar, useToast } from "@/components/ui";
 import { notifyUser, logActivity } from "@/lib/notify";
 import type { Application, Profile } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 type AppWithProfile = Application & { applicant: Pick<Profile, "id" | "full_name"> | null };
 
@@ -40,7 +41,7 @@ export function ApplicationsPanel({
     }
     await notifyUser(supabase, app.applicant_id, {
       type: "application_result",
-      title: accepted ? "Lamaran diterima 🎉" : "Lamaran belum diterima",
+      title: accepted ? "Lamaran diterima" : "Lamaran belum diterima",
       body: accepted
         ? `Kamu bergabung dengan proyek "${projectTitle}".`
         : `Lamaranmu ke "${projectTitle}" tidak dilanjutkan.`,

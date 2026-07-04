@@ -5,6 +5,7 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { Card, Input, Select, Badge, EmptyState, cn } from "@/components/ui";
 import { RESEARCH_FIELDS } from "@/lib/constants";
 import type { Project } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 export type BoardProject = Project & { methods: string[] };
 
@@ -95,7 +96,7 @@ export function ProjectBoard({ projects }: { projects: BoardProject[] }) {
           <Badge tone="slate">{filtered.length} proyek</Badge>
         </div>
         {filtered.length === 0 ? (
-          <EmptyState icon="🔍" title="Tidak ada proyek cocok" description="Coba ubah filter atau kata kunci." />
+          <EmptyState icon={<Icon name="search" size={28} />} title="Tidak ada proyek cocok" description="Coba ubah filter atau kata kunci." />
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {filtered.map((p) => (

@@ -4,6 +4,7 @@ import { AppShell } from "@/components/AppShell";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Card, CardTitle, Badge, LinkButton, EmptyState } from "@/components/ui";
 import type { Project, ProjectMember, Task, ActivityLog, Profile, Application } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -69,7 +70,7 @@ export default async function DashboardPage() {
     <AppShell>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Halo, {firstName} 👋</h1>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Halo, {firstName} <Icon name="wave" size={22} className="inline align-[-3px] text-brand-500" /></h1>
           <p className="text-sm text-slate-500">Ringkasan proyek, tugas, dan aktivitas kamu.</p>
         </div>
         <LinkButton href="/projects/new">+ Proyek baru</LinkButton>
@@ -78,7 +79,7 @@ export default async function DashboardPage() {
       {pendingApps.length > 0 && (
         <Card className="mb-6 border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-900/20">
           <p className="text-sm text-amber-800 dark:text-amber-200">
-            📥 Ada <strong>{pendingApps.length}</strong> lamaran menunggu keputusan.{" "}
+            <Icon name="inbox-in" size={16} className="mr-1 inline align-[-2px] text-brand-600" />Ada <strong>{pendingApps.length}</strong> lamaran menunggu keputusan.{" "}
             <Link href={`/projects/${pendingApps[0].project?.id}`} className="font-medium underline">
               Tinjau sekarang
             </Link>
@@ -94,7 +95,7 @@ export default async function DashboardPage() {
           </div>
           {projects.length === 0 ? (
             <EmptyState
-              icon="🧪"
+              icon={<Icon name="flask" size={28} />}
               title="Belum ada proyek"
               description="Buat proyek dari template metode atau gabung proyek terbuka."
               action={<LinkButton href="/projects/new">Buat proyek</LinkButton>}

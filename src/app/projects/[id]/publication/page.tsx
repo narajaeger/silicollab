@@ -10,6 +10,7 @@ import type {
   ProjectMember,
   Profile,
 } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 export default async function PublicationPage({
   params,
@@ -29,7 +30,7 @@ export default async function PublicationPage({
     .eq("user_id", user?.id ?? "")
     .maybeSingle();
   if (!membership) {
-    return <EmptyState icon="🔒" title="Khusus anggota" description="Bergabung dulu untuk membuka pipeline publikasi." />;
+    return <EmptyState icon={<Icon name="lock" size={28} />} title="Khusus anggota" description="Bergabung dulu untuk membuka pipeline publikasi." />;
   }
 
   const { data: manuscript } = await supabase

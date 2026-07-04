@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Button, Card, CardTitle, Input, useToast } from "@/components/ui";
 import type { Attachment } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 export function AttachmentsPanel({
   stageId,
@@ -76,9 +77,9 @@ export function AttachmentsPanel({
           {items.map((a) => (
             <li key={a.id} className="flex items-center justify-between gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm dark:border-slate-800">
               <a href={a.url} target="_blank" rel="noopener noreferrer" className="min-w-0 flex-1 truncate text-brand-600 hover:underline">
-                {a.kind === "file" ? "📎" : "🔗"} {a.label}
+                <Icon name={a.kind === "file" ? "paperclip" : "link"} size={14} className="mr-1 inline align-[-2px]" />{a.label}
               </a>
-              <button onClick={() => remove(a.id)} className="text-xs text-slate-400 hover:text-rose-600">✕</button>
+              <button onClick={() => remove(a.id)} className="text-xs text-slate-400 hover:text-rose-600"><Icon name="close" size={14} /></button>
             </li>
           ))}
         </ul>

@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { ChatPanel } from "@/components/ChatPanel";
 import { EmptyState } from "@/components/ui";
 import type { ChatMessage } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 export default async function ChatPage({
   params,
@@ -22,7 +23,7 @@ export default async function ChatPage({
     .maybeSingle();
 
   if (!membership) {
-    return <EmptyState icon="🔒" title="Khusus anggota" description="Bergabung dulu untuk ikut diskusi tim." />;
+    return <EmptyState icon={<Icon name="lock" size={28} />} title="Khusus anggota" description="Bergabung dulu untuk ikut diskusi tim." />;
   }
 
   const { data: messages } = await supabase

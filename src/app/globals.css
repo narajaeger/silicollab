@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #f4f8ff;
+  --foreground: #1b2b46;
 }
 
 .dark {
@@ -20,30 +20,61 @@ html.dark {
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
+  background-color: var(--background);
+  background-image:
+    radial-gradient(1200px 600px at 12% -10%, #eaf1ff 0%, transparent 55%),
+    radial-gradient(1000px 620px at 100% 0%, #e6f0ff 0%, transparent 50%),
+    radial-gradient(900px 700px at 50% 120%, #eef4ff 0%, transparent 55%);
+  background-attachment: fixed;
+}
+.dark body {
+  background-image:
+    radial-gradient(1200px 600px at 12% -10%, rgba(65, 116, 201, 0.18) 0%, transparent 55%),
+    radial-gradient(1000px 620px at 100% 0%, rgba(91, 143, 221, 0.12) 0%, transparent 50%);
 }
 
-/* Angka tabular untuk data numerik */
+.glass {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 8px 30px -12px rgba(65, 116, 201, 0.25);
+}
+.dark .glass {
+  background: rgba(17, 26, 45, 0.55);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  box-shadow: 0 8px 30px -12px rgba(0, 0, 0, 0.5);
+}
+
+.glass-soft {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+.dark .glass-soft {
+  background: rgba(17, 26, 45, 0.4);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+}
+
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
 
-/* Scrollbar halus */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(148, 163, 184, 0.5) transparent;
+  scrollbar-color: rgba(122, 158, 214, 0.45) transparent;
 }
 *::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 *::-webkit-scrollbar-thumb {
-  background-color: rgba(148, 163, 184, 0.5);
+  background-color: rgba(122, 158, 214, 0.45);
   border-radius: 9999px;
 }
 
-/* Skeleton shimmer */
 .skeleton {
   position: relative;
   overflow: hidden;
@@ -68,4 +99,14 @@ body {
     rgba(255, 255, 255, 0.06),
     transparent
   );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

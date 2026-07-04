@@ -1,7 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
 import { AppShell } from "@/components/AppShell";
-import { CommunityDirectory, type Researcher } from "@/components/CommunityDirectory";
-import type { Profile, University, ProjectMember, Project } from "@/types/database";
+import {
+  CommunityDirectory,
+  type Researcher,
+  type ConnectionState,
+} from "@/components/CommunityDirectory";
+import type { Profile, University, ProjectMember, Project, Connection } from "@/types/database";
 
 export default async function CommunityPage({
   searchParams,
@@ -17,7 +21,6 @@ export default async function CommunityPage({
   const { data: unis } = await supabase.from("universities").select("*");
   const uniMap = new Map(((unis ?? []) as University[]).map((u) => [u.id, u.name]));
 
-  // Reputasi: hitung proyek & proyek selesai per user
   const { data: memberships } = await supabase
     .from("project_members")
     .select("user_id, project:projects(status)");
@@ -49,13 +52,40 @@ export default async function CommunityPage({
 
   const universities = Array.from(uniMap.values()).sort();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const currentUserId = user?.id ?? null;
+
+  const connectionMap: Record<string, ConnectionState> = {};
+  if (currentUserId) {
+    const { data: conns } = await supabase
+      .from("connections")
+      .select("*")
+      .or(`requester_id.eq.${currentUserId},addressee_id.eq.${currentUserId}`);
+    for (const c of (conns ?? []) as Connection[]) {
+      const otherId = c.requester_id === currentUserId ? c.addressee_id : c.requester_id;
+      connectionMap[otherId] = {
+        id: c.id,
+        status: c.status,
+        outgoing: c.requester_id === currentUserId,
+      };
+    }
+  }
+
   return (
     <AppShell>
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Komunitas peneliti</h1>
         <p className="text-sm text-slate-500">Temukan partner berdasarkan skill, tool, dan universitas.</p>
       </div>
-      <CommunityDirectory researchers={researchers} universities={universities} initialQuery={q ?? ""} />
+      <CommunityDirectory
+        researchers={researchers}
+        universities={universities}
+        initialQuery={q ?? ""}
+        currentUserId={currentUserId}
+        connections={connectionMap}
+      />
     </AppShell>
   );
 }

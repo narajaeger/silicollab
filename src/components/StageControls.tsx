@@ -7,6 +7,7 @@ import { Card, CardTitle, Button, Badge, Select, useToast } from "@/components/u
 import { STAGE_STATUS_META } from "@/lib/constants";
 import { logActivity } from "@/lib/notify";
 import type { ChecklistItem, ResearchStage, StageStatus } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 const STATUS_OPTIONS: StageStatus[] = ["not_started", "in_progress", "done", "blocked"];
 
@@ -92,7 +93,7 @@ export function StageControls({
 
       {status !== "done" && (
         <Button variant="success" className="w-full" onClick={markDone}>
-          ✓ Tandai tahap selesai
+          <Icon name="check" size={16} className="inline align-[-2px]" /> Tandai tahap selesai
         </Button>
       )}
     </Card>

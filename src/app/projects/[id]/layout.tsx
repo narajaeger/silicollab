@@ -6,6 +6,7 @@ import { ProjectTabs } from "@/components/ProjectTabs";
 import { Badge, LinkButton } from "@/components/ui";
 import { PROJECT_STATUS_META } from "@/lib/constants";
 import type { Project } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 export default async function ProjectLayout({
   children,
@@ -38,7 +39,7 @@ export default async function ProjectLayout({
     <AppShell>
       <div className="mb-4">
         <Link href="/projects" className="text-sm text-slate-500 hover:text-brand-600">
-          ← Semua proyek
+          <Icon name="arrow-left" size={14} className="inline align-[-2px]" /> Semua proyek
         </Link>
         <div className="mt-2 flex flex-wrap items-start justify-between gap-3">
           <div>

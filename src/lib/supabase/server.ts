@@ -23,7 +23,7 @@ export async function createClient(): Promise<SupabaseClient<Database>> {
               cookieStore.set(name, value, options)
             );
           } catch {
-            // Dipanggil dari Server Component — diabaikan; middleware menyegarkan sesi.
+            // Dipanggil dari Server Component, diabaikan; middleware menyegarkan sesi.
           }
         },
       },

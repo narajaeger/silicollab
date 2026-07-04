@@ -8,6 +8,7 @@ import { Card, CardTitle, Button, Input, Select, Label, cn, useToast } from "@/c
 import { RESEARCH_FIELDS } from "@/lib/constants";
 import { TOOLS_REGISTRY } from "@/lib/tools-registry";
 import type { University } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 const TOOL_NAMES = TOOLS_REGISTRY.map((t) => t.name);
 
@@ -80,7 +81,7 @@ export default function OnboardingPage() {
     <AppShell>
       <div className="mx-auto max-w-2xl">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Selamat datang 🎉</h1>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Selamat datang <Icon name="sparkles" size={22} className="inline align-[-2px] text-brand-500" /></h1>
           <p className="text-sm text-slate-500">Lengkapi profil singkat (langkah {step}/3) agar mudah ditemukan tim.</p>
           <div className="mt-3 flex gap-2">
             {[1, 2, 3].map((n) => (
@@ -99,7 +100,7 @@ export default function OnboardingPage() {
             <div>
               <Label>Universitas</Label>
               <Select value={uni} onChange={(e) => setUni(e.target.value)}>
-                <option value="">— Pilih —</option>
+                <option value="">Pilih universitas</option>
                 {universities.map((u) => (
                   <option key={u.id} value={u.id}>{u.name}</option>
                 ))}

@@ -6,6 +6,7 @@ import { Button, Badge, Modal, Input, Textarea, Select, Label, Avatar, useToast,
 import { TASK_STATUS_ORDER, TASK_STATUS_META, TASK_PRIORITY_META } from "@/lib/constants";
 import { notifyUser, logActivity } from "@/lib/notify";
 import type { Task, TaskStatus, TaskPriority } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 type Member = { user_id: string; full_name: string };
 
@@ -128,7 +129,7 @@ export function KanbanBoard({
                           onClick={() => removeTask(t.id)}
                           className="text-xs text-slate-300 opacity-0 transition hover:text-rose-600 group-hover:opacity-100"
                         >
-                          ✕
+                          <Icon name="close" size={14} />
                         </button>
                       </div>
                       {t.description && (
@@ -138,7 +139,7 @@ export function KanbanBoard({
                         <Badge tone={pr.tone}>{pr.label}</Badge>
                         {t.due_date && (
                           <Badge tone={overdue ? "rose" : "slate"}>
-                            📅 {new Date(t.due_date).toLocaleDateString("id-ID", { day: "numeric", month: "short" })}
+                            <Icon name="calendar" size={12} className="mr-1 inline align-[-2px]" />{new Date(t.due_date).toLocaleDateString("id-ID", { day: "numeric", month: "short" })}
                           </Badge>
                         )}
                         {nameOf(t.assignee_id) && (
@@ -173,7 +174,7 @@ export function KanbanBoard({
             <div>
               <Label>Ditugaskan ke</Label>
               <Select value={assignee} onChange={(e) => setAssignee(e.target.value)}>
-                <option value="">— Belum —</option>
+                <option value="">Belum ditugaskan</option>
                 {members.map((m) => (
                   <option key={m.user_id} value={m.user_id}>{m.full_name}</option>
                 ))}

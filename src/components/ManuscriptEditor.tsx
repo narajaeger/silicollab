@@ -12,6 +12,7 @@ import type {
   AuthorEntry,
   ChecklistItem,
 } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 const STATUSES: ManuscriptStatus[] = ["draft", "submitted", "revision", "accepted", "rejected"];
 
@@ -114,7 +115,7 @@ export function ManuscriptEditor({
                 toast.push("Draft Metode dihasilkan dari panel reprodusibilitas.", "info");
               }}
             >
-              ⚙ Auto-draft Metode
+              <Icon name="settings" size={15} /> Auto-draft Metode
             </Button>
             <Button
               size="sm"
@@ -124,7 +125,7 @@ export function ManuscriptEditor({
                 toast.push("Draft Hasil dihasilkan dari tabel data.", "info");
               }}
             >
-              📊 Auto-draft Hasil
+              <Icon name="chart" size={15} /> Auto-draft Hasil
             </Button>
           </div>
           <Label>Abstrak</Label>
@@ -134,7 +135,7 @@ export function ManuscriptEditor({
           <Label>Hasil</Label>
           <Textarea rows={7} value={results} onChange={(e) => setResults(e.target.value)} />
           <p className="mt-2 text-xs text-slate-400">
-            Draft otomatis adalah bantuan awal — wajib diverifikasi & disunting peneliti.
+            Draft otomatis ini cuma titik awal. Tetap harus kamu periksa dan sunting sendiri.
           </p>
         </Card>
 
@@ -152,9 +153,9 @@ export function ManuscriptEditor({
                   </span>
                   <Input value={a.name} onChange={(e) => setAuthor(i, { name: e.target.value })} placeholder="Nama penulis" />
                   <div className="flex shrink-0 gap-1">
-                    <button onClick={() => moveAuthor(i, -1)} className="px-1 text-slate-400 hover:text-slate-700">↑</button>
-                    <button onClick={() => moveAuthor(i, 1)} className="px-1 text-slate-400 hover:text-slate-700">↓</button>
-                    <button onClick={() => removeAuthor(i)} className="px-1 text-slate-400 hover:text-rose-600">✕</button>
+                    <button onClick={() => moveAuthor(i, -1)} className="px-1 text-slate-400 hover:text-slate-700" aria-label="Naik"><Icon name="arrow-up" size={14} /></button>
+                    <button onClick={() => moveAuthor(i, 1)} className="px-1 text-slate-400 hover:text-slate-700" aria-label="Turun"><Icon name="arrow-down" size={14} /></button>
+                    <button onClick={() => removeAuthor(i)} className="px-1 text-slate-400 hover:text-rose-600" aria-label="Hapus"><Icon name="close" size={14} /></button>
                   </div>
                 </div>
                 <Input

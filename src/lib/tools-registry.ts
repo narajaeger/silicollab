@@ -1,4 +1,4 @@
-// Registry tool in silico — katalog referensi (fungsi, tahap, lisensi, tautan, tips).
+// Registry tool in silico, katalog referensi (fungsi, tahap, lisensi, tautan, tips).
 import type { ToolLicense } from "@/types/database";
 
 export interface ToolDef {

@@ -17,6 +17,7 @@ import type {
   ProjectMember,
   Profile,
 } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 export default async function StagePage({
   params,
@@ -36,12 +37,12 @@ export default async function StagePage({
     .eq("user_id", user?.id ?? "")
     .maybeSingle();
   if (!membership) {
-    return <EmptyState icon="🔒" title="Khusus anggota" description="Bergabung dulu untuk membuka workspace." />;
+    return <EmptyState icon={<Icon name="lock" size={28} />} title="Khusus anggota" description="Bergabung dulu untuk membuka workspace." />;
   }
 
   const { data: stage } = await supabase.from("research_stages").select("*").eq("id", stageId).single();
   const s = stage as ResearchStage | null;
-  if (!s) return <EmptyState icon="❓" title="Tahap tidak ditemukan" />;
+  if (!s) return <EmptyState icon={<Icon name="help" size={28} />} title="Tahap tidak ditemukan" />;
 
   const { data: tables } = await supabase
     .from("data_tables")
@@ -110,7 +111,7 @@ export default async function StagePage({
         <div className="space-y-6 lg:col-span-2">
           {tableList.length === 0 ? (
             <EmptyState
-              icon="📊"
+              icon={<Icon name="chart" size={28} />}
               title="Belum ada tabel data"
               description="Buat tabel pertamamu untuk menabulasi data & sumbernya."
             />

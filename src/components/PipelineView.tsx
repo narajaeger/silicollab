@@ -8,6 +8,7 @@ import { Button, Card, Badge, Modal, Input, Textarea, Label, EmptyState, useToas
 import { STAGE_STATUS_META } from "@/lib/constants";
 import { logActivity } from "@/lib/notify";
 import type { ResearchStage, StageStatus } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 const STATUS_OPTIONS: StageStatus[] = ["not_started", "in_progress", "done", "blocked"];
 
@@ -81,7 +82,7 @@ export function PipelineView({
   if (stages.length === 0) {
     return (
       <EmptyState
-        icon="🧬"
+        icon={<Icon name="dna" size={28} />}
         title="Belum ada tahapan"
         description="Tambahkan tahap pertama untuk mulai menyusun pipeline."
         action={<Button onClick={() => setAddOpen(true)}>+ Tambah tahap</Button>}
@@ -173,7 +174,7 @@ export function PipelineView({
                     href={`/projects/${projectId}/workspace/${s.id}`}
                     className="mt-2 inline-block text-xs font-medium text-brand-600 hover:underline"
                   >
-                    Buka workspace tahap →
+                    Buka workspace tahap <Icon name="arrow-right" size={13} className="inline align-[-2px]" />
                   </Link>
                 </div>
               </div>

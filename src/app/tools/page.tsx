@@ -5,6 +5,7 @@ import { AppShell } from "@/components/AppShell";
 import { Card, Input, Select, Badge, EmptyState, cn } from "@/components/ui";
 import { TOOLS_REGISTRY, TOOL_CATEGORIES, LICENSE_LABEL } from "@/lib/tools-registry";
 import type { ToolLicense } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 const licenseTone: Record<ToolLicense, "emerald" | "amber" | "rose"> = {
   free: "emerald",
@@ -56,7 +57,7 @@ export default function ToolsPage() {
       </div>
 
       {filtered.length === 0 ? (
-        <EmptyState icon="🧰" title="Tidak ada tool cocok" description="Coba kata kunci atau filter lain." />
+        <EmptyState icon={<Icon name="toolbox" size={28} />} title="Tidak ada tool cocok" description="Coba kata kunci atau filter lain." />
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((t) => (
@@ -74,7 +75,7 @@ export default function ToolsPage() {
                   </span>
                 ))}
               </div>
-              <p className="mt-3 text-xs text-slate-500">💡 {t.tips}</p>
+              <p className="mt-3 text-xs text-slate-500"><Icon name="lightbulb" size={14} className="mr-1 inline align-[-2px] text-amber-500" />{t.tips}</p>
               <a
                 href={t.url}
                 target="_blank"

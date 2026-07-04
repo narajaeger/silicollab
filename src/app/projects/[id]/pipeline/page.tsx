@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { PipelineView } from "@/components/PipelineView";
 import { EmptyState } from "@/components/ui";
 import type { ResearchStage } from "@/types/database";
+import { Icon } from "@/components/Icon";
 
 export default async function PipelinePage({
   params,
@@ -24,7 +25,7 @@ export default async function PipelinePage({
   if (!membership) {
     return (
       <EmptyState
-        icon="🔒"
+        icon={<Icon name="lock" size={28} />}
         title="Khusus anggota"
         description="Kamu perlu menjadi anggota proyek untuk mengakses pipeline."
       />

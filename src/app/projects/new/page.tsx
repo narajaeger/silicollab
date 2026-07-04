@@ -7,6 +7,7 @@ import { AppShell } from "@/components/AppShell";
 import { Button, Card, CardTitle, Input, Textarea, Select, Label, Badge, cn, useToast } from "@/components/ui";
 import { RESEARCH_FIELDS, SUGGESTED_ROLES } from "@/lib/constants";
 import { METHOD_TEMPLATES, METHOD_CATEGORIES, type TemplateStage } from "@/lib/method-templates";
+import { Icon } from "@/components/Icon";
 
 export default function NewProjectPage() {
   const router = useRouter();
@@ -216,7 +217,7 @@ export default function NewProjectPage() {
                                 on ? "border-brand-600 bg-brand-600 text-white" : "border-slate-300"
                               )}
                             >
-                              {on ? "✓" : ""}
+                              {on ? <Icon name="check" size={14} /> : null}
                             </span>
                           </div>
                           <p className="mt-1 line-clamp-2 text-xs text-slate-500">{m.description}</p>
