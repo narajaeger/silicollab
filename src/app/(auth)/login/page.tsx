@@ -32,10 +32,17 @@ function LoginForm() {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    setLoading(false);
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email.trim(),
+      password,
+    });
     if (error) {
-      setError(error.message);
+      setLoading(false);
+      setError(
+        error.message === "Invalid login credentials"
+          ? "Email atau password salah."
+          : error.message
+      );
       return;
     }
     router.push(redirect);
@@ -88,11 +95,25 @@ function LoginForm() {
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <Label>Email</Label>
-            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            <Input
+              type="email"
+              name="email"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
           <div>
             <Label>Password</Label>
-            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <Input
+              type="password"
+              name="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </div>
           {error && <p className="text-sm text-rose-600">{error}</p>}
           <Button type="submit" disabled={loading} className="w-full">

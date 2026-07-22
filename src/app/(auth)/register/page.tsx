@@ -24,13 +24,17 @@ export default function RegisterPage() {
     setLoading(true);
     setError(null);
     const { data, error } = await supabase.auth.signUp({
-      email,
+      email: email.trim(),
       password,
-      options: { data: { full_name: fullName } },
+      options: { data: { full_name: fullName.trim() } },
     });
     setLoading(false);
     if (error) {
-      setError(error.message);
+      setError(
+        error.message === "User already registered"
+          ? "Email ini sudah terdaftar. Coba masuk saja."
+          : error.message
+      );
       return;
     }
     if (data.session) {
@@ -86,15 +90,36 @@ export default function RegisterPage() {
         <form onSubmit={handleRegister} className="space-y-4">
           <div>
             <Label>Nama lengkap</Label>
-            <Input value={fullName} onChange={(e) => setFullName(e.target.value)} required />
+            <Input
+              name="name"
+              autoComplete="name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              required
+            />
           </div>
           <div>
             <Label>Email</Label>
-            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            <Input
+              type="email"
+              name="email"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
           <div>
             <Label>Password</Label>
-            <Input type="password" minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <Input
+              type="password"
+              name="password"
+              autoComplete="new-password"
+              minLength={6}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </div>
           {error && <p className="text-sm text-rose-600">{error}</p>}
           {message && <p className="text-sm text-emerald-600">{message}</p>}

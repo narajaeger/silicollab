@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { AppShell } from "@/components/AppShell";
 import { ProfileForm } from "@/components/ProfileForm";
@@ -11,14 +12,16 @@ export default async function ProfilePage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data: profile } = await supabase.from("profiles").select("*").eq("id", user!.id).single();
+  if (!user) redirect("/login?redirect=/profile");
+
+  const { data: profile } = await supabase.from("profiles").select("*").eq("id", user.id).single();
   const p = profile as Profile;
   const { data: universities } = await supabase.from("universities").select("*").order("name");
 
   const { data: memberships } = await supabase
     .from("project_members")
     .select("project:projects(status)")
-    .eq("user_id", user!.id);
+    .eq("user_id", user.id);
   const mem = ((memberships ?? []) as unknown as { project: Pick<Project, "status"> | null }[]);
   const total = mem.length;
   const done = mem.filter((m) => m.project?.status === "completed").length;

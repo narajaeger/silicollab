@@ -3,14 +3,18 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "@/types/database";
 
+// Halaman-halaman ini butuh login. Menjelajah proyek, komunitas, dan registry
+// tool tetap terbuka untuk pengunjung tanpa akun — supaya orang bisa lihat dulu
+// fitur-fiturnya sebelum daftar. Login baru diwajibkan saat mau membuat proyek
+// atau membuka fitur pribadi (dashboard, profil, notifikasi, onboarding).
+// Sub-halaman workspace proyek (chat/tugas/pipeline/dll) sudah menjaga dirinya
+// sendiri lewat pengecekan keanggotaan di masing-masing halaman.
 const PROTECTED_PREFIXES = [
   "/dashboard",
-  "/projects",
   "/profile",
-  "/community",
-  "/tools",
   "/notifications",
   "/onboarding",
+  "/projects/new",
 ];
 
 type CookieToSet = { name: string; value: string; options?: Record<string, unknown> };

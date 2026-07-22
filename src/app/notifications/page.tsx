@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { AppShell } from "@/components/AppShell";
 import { NotificationsList } from "@/components/NotificationsList";
@@ -9,10 +10,12 @@ export default async function NotificationsPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  if (!user) redirect("/login?redirect=/notifications");
+
   const { data: notifs } = await supabase
     .from("notifications")
     .select("*")
-    .eq("user_id", user!.id)
+    .eq("user_id", user.id)
     .order("created_at", { ascending: false })
     .limit(100);
 

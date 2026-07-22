@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { AppShell } from "@/components/AppShell";
 import { ProjectCard } from "@/components/ProjectCard";
@@ -12,16 +13,20 @@ export default async function DashboardPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // Jaga-jaga: middleware seharusnya sudah menahan pengguna anonim, tapi kalau
+  // sesi belum tersinkron (mis. tepat setelah login), jangan crash — arahkan ke /login.
+  if (!user) redirect("/login?redirect=/dashboard");
+
   const { data: profile } = await supabase
     .from("profiles")
     .select("full_name")
-    .eq("id", user!.id)
+    .eq("id", user.id)
     .maybeSingle();
 
   const { data: memberships } = await supabase
     .from("project_members")
     .select("project:projects(*)")
-    .eq("user_id", user!.id);
+    .eq("user_id", user.id);
   const projects = ((memberships ?? []) as unknown as { project: Project | null }[])
     .map((m) => m.project)
     .filter((p): p is Project => !!p);
@@ -33,7 +38,7 @@ export default async function DashboardPage() {
     const { data } = await supabase
       .from("tasks")
       .select("*, project:projects(id, title)")
-      .eq("assignee_id", user!.id)
+      .eq("assignee_id", user.id)
       .neq("status", "done")
       .order("due_date", { ascending: true, nullsFirst: false })
       .limit(8);
@@ -53,7 +58,7 @@ export default async function DashboardPage() {
   }
 
   // Lamaran masuk ke proyek yang saya miliki
-  const ownedIds = projects.filter((p) => p.owner_id === user!.id).map((p) => p.id);
+  const ownedIds = projects.filter((p) => p.owner_id === user.id).map((p) => p.id);
   let pendingApps: (Application & { project: Pick<Project, "id" | "title"> | null })[] = [];
   if (ownedIds.length > 0) {
     const { data } = await supabase
